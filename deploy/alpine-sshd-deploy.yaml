@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: alpine-sshd
+  name: alpine-sshd
+  namespace: prodautos
+  annotations:
+    kubernetes.io/change-cause: Development version
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alpine-sshd
+  template:
+    metadata:
+      labels:
+        app: alpine-sshd
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - image: sgaunet/alpine-sshd:latest
+        name: alpine-sshd
+        envFrom:
+          - configMapRef:
+              name: cm-alpine-sshd
+        ports:
+        - containerPort: 22
+          name: sshd
+
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "50Mi"
+          requests:
+            cpu: "50m"
+            memory: "40Mi"
+        imagePullPolicy: Always
+
+      restartPolicy: Always
+    

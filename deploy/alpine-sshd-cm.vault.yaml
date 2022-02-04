@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-alpine-sshd
+  namespace: prodautos
+data:
+  AUTHORIZED_KEYS: |
+    ssh-rsa AAA....7/ASaySB9fKuxjEoiYjbHF8=
+  DATA_FOLDERS: "folder1 folder2 folder3"
