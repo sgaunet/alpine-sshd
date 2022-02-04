@@ -6,4 +6,5 @@ metadata:
 data:
   AUTHORIZED_KEYS: |
     ssh-rsa AAA....7/ASaySB9fKuxjEoiYjbHF8=
+  # SSHUSER_PASSWORD: "sshpassword"
   DATA_FOLDERS: "folder1 folder2 folder3"

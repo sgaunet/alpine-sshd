@@ -20,4 +20,11 @@ do
   chown sshuser:ssh_group /data/$folder
 done
 
+if [ ! -z "$SSHUSER_PASSWORD" ]
+then
+  echo -e "$SSHUSER_PASSWORD\n$SSHUSER_PASSWORD" | passwd sshuser
+else
+  sed -i s/^#PasswordAuthentication\ yes/PasswordAuthentication\ no/ /etc/ssh/sshd_config
+fi
+
 exec "$@"

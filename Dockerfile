@@ -9,8 +9,7 @@ RUN addgroup -S ssh_group -g 1000 && \
 # ssh-keygen -A generates all necessary host keys (rsa, dsa, ecdsa, ed25519) at default location.
 RUN    apk update \
     && apk add openssh rsync \
-    && ssh-keygen -A \
-    && sed -i s/^#PasswordAuthentication\ yes/PasswordAuthentication\ no/ /etc/ssh/sshd_config
+    && ssh-keygen -A
 
 RUN wget https://github.com/ochinchina/supervisord/releases/download/v0.7.3/supervisord_0.7.3_Linux_64-bit.tar.gz -O /tmp/supervisord.tar.gz && \
     tar zxvf /tmp/supervisord.tar.gz -C /tmp && \
