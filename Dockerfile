@@ -1,4 +1,4 @@
-FROM alpine:3.16.2
+FROM alpine:3.17.0
 
 RUN addgroup -S ssh_group -g 1000 && \
     adduser -S sshuser -G ssh_group --uid 1000 -s /bin/ash && \
@@ -25,6 +25,3 @@ COPY src/supervisor.conf /etc/
 EXPOSE 22
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/bin/supervisord","-c","/etc/supervisor.conf"]
-
-
-
