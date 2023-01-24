@@ -27,3 +27,11 @@ In the deploy folder, there are:
 
 * a docker folder with a docker-compose file to launch it
 * a k8s folder with the manifests
+
+# Development
+
+This project is using :
+
+* [task for development](https://taskfile.dev/#/)
+* docker
+* [venom for tests](https://github.com/ovh/venom)

@@ -1,0 +1,54 @@
+name: Exec testsuite
+
+testcases:
+- name: init
+  steps:
+  - type: exec
+    script: pwd
+    info: '{{.result.systemout}}'
+    vars:
+      tstFolder:
+        from: result.systemout
+        # regex: foo with a ([a-z]+) here
+
+- name: init file /tmp/toto
+  steps:
+  - type: exec
+    script: dd if=/dev/urandom of=/tmp/toto  bs=1024 count=102400
+    info: dd if=/dev/urandom of=/tmp/toto  bs=1024 count=102400
+    assertions:
+    - result.code ShouldEqual 0
+
+- name: generate rsa keys
+  steps:
+  - type: exec
+    script: |
+      ssh-keygen -t rsa -f /tmp/keyfile -N ""
+      docker run --rm -d --name alpine-sshd -p "2222:22" -e AUTHORIZED_KEYS="$(cat /tmp/keyfile.pub)" -e SSHUSER_PASSWORD=sshpassword -e DATA_FOLDERS="folder1 folder2 folder" sgaunet/alpine-sshd:latest
+    assertions:
+    - result.code ShouldEqual 0
+
+- name: scp file
+  steps:
+  - type: exec
+    script: |
+      sleep 1
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/keyfile -P 2222 Dockerfile sshuser@localhost:/data/folder1
+    assertions:
+    - result.code ShouldEqual 0
+
+- name: stop alpine-sshd
+  steps:
+  - type: exec
+    script: |
+      docker stop alpine-sshd
+    assertions:
+    - result.code ShouldEqual 0
+
+- name: delete temporary files
+  steps:
+  - type: exec
+    script: |
+      rm /tmp/keyfile /tmp/keyfile.pub /tmp/toto
+    assertions:
+    - result.code ShouldEqual 0
