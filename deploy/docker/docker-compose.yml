@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+    sshd:
+        image: sgaunet/alpine-sshd:latest
+        # restart: always
+        ports:
+            - "2222:22"
+        environment:
+            - AUTHORIZED_KEYS=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCobaPuG8hWdO7t1Z0s7sPa/4DEVU4T1TvdrPuBi0PtYHGIGCUWeEDs6YCHNFjD6IMikWU2Tpi85AOVO2d8pA5XWwD+4D3E/Y1Hivs/orh7fyaBpfga4B91OXJuY+95WAiGl3gW15uEjDJ9u5KVKdY/jbXiLVkpsQZf0EgRrFkJXFZbdhulUVhAUEPKVUdp3ujCDYGrQVivChF2Qq6+c1aV66k0veIwCEdFWxGC92HFwkKgbyBhWHN6dHF2pGlL+6i4e3vUOeBiFQH4eN9CIsRuinK7W1Pzlhxcaw91LufbpPkbKbE8gJyn4zCA8AK/BV9cUw/WvxA6usOYhRN/rQS/h8jCzlZmkV/r7DS7PquHuSwD7+8TaOWX0NwT9hvrKAliK+YWW79DzJ+K0Ln6ZaDun/jhrmliP2DUYIBav1QNaDJ/7u/Z6sV+TUY50ZvX5enW71iA2VEdQR65399wSVlbKraNUeVHo24yHzXsKz9hbNJUZd8P3bSjugIp4oK/uS8=
+            - SSHUSER_PASSWORD=sshpassword
+            - DATA_FOLDERS=folder1 folder2 folder3
+            - DELETEOLDERFILESINMIN=30
+
+
+    
