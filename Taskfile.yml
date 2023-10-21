@@ -5,15 +5,23 @@ vars:
 
 tasks:
   default:
+    desc: "List all tasks"
+    cmds:
+      - task -a
+
+  build:
+    desc: "Build the docker image"
     cmds:
       - docker build -t {{.IMAGENAME}}:latest .
     # silent: true
 
   push:
+    desc: "Push the docker image"
     cmds:
       - docker push {{.IMAGENAME}}:latest
     
   test:
+    desc: "Run the tests"
     deps:
       - default
     cmds:
