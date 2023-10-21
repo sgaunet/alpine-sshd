@@ -1,4 +1,4 @@
-FROM alpine:3.17.0
+FROM alpine:3.18.4
 
 RUN addgroup -S ssh_group -g 1000 && \
     adduser -S sshuser -G ssh_group --uid 1000 -s /bin/ash && \
