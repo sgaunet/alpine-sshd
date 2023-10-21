@@ -20,10 +20,11 @@ tasks:
     cmds:
       - docker push {{.IMAGENAME}}:latest
     
-  test:
+  tests:
     desc: "Run the tests"
+    dir: tests
     deps:
-      - default
+      - build
     cmds:
       - venom run testsuite-docker.yml --output-dir log --stop-on-failure
     

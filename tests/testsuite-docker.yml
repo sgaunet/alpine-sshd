@@ -23,6 +23,9 @@ testcases:
   steps:
   - type: exec
     script: |
+      test -f /tmp/keyfile && rm /tmp/keyfile
+      test -f /tmp/keyfile.pub && rm /tmp/keyfile.pub
+      docker stop alpine-sshd
       ssh-keygen -t rsa -f /tmp/keyfile -N ""
       docker run --rm -d --name alpine-sshd -p "2222:22" -e AUTHORIZED_KEYS="$(cat /tmp/keyfile.pub)" -e SSHUSER_PASSWORD=sshpassword -e DATA_FOLDERS="folder1 folder2 folder" sgaunet/alpine-sshd:latest
     assertions:
@@ -33,7 +36,7 @@ testcases:
   - type: exec
     script: |
       sleep 1
-      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/keyfile -P 2222 Dockerfile sshuser@localhost:/data/folder1
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/keyfile -P 2222 /tmp/toto sshuser@localhost:/data/folder1
     assertions:
     - result.code ShouldEqual 0
 
