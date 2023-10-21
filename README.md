@@ -35,3 +35,10 @@ This project is using :
 * [task for development](https://taskfile.dev/#/)
 * docker
 * [venom for tests](https://github.com/ovh/venom)
+
+# Docker images
+
+The github actions is producing two docker images:
+
+* ghcr.io/sgaunet/alpine-sshd:latest (replace latest with the last tag)
+* docker.io/sgaunet/alpine-sshd:latest (replace latest with the last tag)
