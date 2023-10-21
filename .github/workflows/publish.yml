@@ -1,0 +1,45 @@
+name: publish docker image
+on: push
+
+jobs:
+  publish-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build/Push image ghcr.io/sgaunet/alpine-sshd:latest
+        shell: /usr/bin/bash {0}
+        run: |
+          docker build . -t ghcr.io/sgaunet/alpine-sshd:latest
+          docker push       ghcr.io/sgaunet/alpine-sshd:latest
+          # get tags of current commit
+          tag=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
+          if [ ! -z "$tag" ]; then
+            echo "Tag name from git describe: $tag"
+            docker tag  ghcr.io/sgaunet/alpine-sshd:latest ghcr.io/sgaunet/alpine-sshd:$tag
+            docker push ghcr.io/sgaunet/alpine-sshd:$tag
+          fi
+      - name: Login to Docker Container Registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ vars.DOCKERHUB_LOGIN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Tag and Push image to docker registry
+        shell: /usr/bin/bash {0}
+        run: |
+            docker tag ghcr.io/sgaunet/alpine-sshd:latest sgaunet/alpine-sshd:latest
+            docker push       sgaunet/alpine-sshd:latest
+            # get tags of current commit
+            tag=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
+            if [ ! -z "$tag" ]; then
+              echo "Tag name from git describe: $tag"
+              docker tag  ghcr.io/sgaunet/alpine-sshd:latest sgaunet/alpine-sshd:$tag
+              docker push sgaunet/alpine-sshd:$tag
+            fi
