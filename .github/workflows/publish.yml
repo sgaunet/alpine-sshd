@@ -7,6 +7,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: git fetch --prune --unshallow
+      -
+        # Add support for more platforms with QEMU (optional)
+        # https://github.com/docker/setup-qemu-action
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -17,14 +25,13 @@ jobs:
       - name: Build/Push image ghcr.io/sgaunet/alpine-sshd:latest
         shell: /usr/bin/bash {0}
         run: |
-          docker build . -t ghcr.io/sgaunet/alpine-sshd:latest
-          docker push       ghcr.io/sgaunet/alpine-sshd:latest
+          docker buildx build . --platform linux/amd64,linux/arm64 --push -t ghcr.io/sgaunet/alpine-sshd:latest
+
           # get tags of current commit
           tag=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
           if [ ! -z "$tag" ]; then
-            echo "Tag name from git describe: $tag"
-            docker tag  ghcr.io/sgaunet/alpine-sshd:latest ghcr.io/sgaunet/alpine-sshd:$tag
-            docker push ghcr.io/sgaunet/alpine-sshd:$tag
+            echo "docker buildx build . --platform linux/amd64,linux/arm64 --push -t ghcr.io/sgaunet/alpine-sshd:$tag"
+            docker buildx build . --platform linux/amd64,linux/arm64 --push -t ghcr.io/sgaunet/alpine-sshd:$tag
           fi
       - name: Login to Docker Container Registry
         uses: docker/login-action@v3
@@ -34,12 +41,10 @@ jobs:
       - name: Tag and Push image to docker registry
         shell: /usr/bin/bash {0}
         run: |
-            docker tag ghcr.io/sgaunet/alpine-sshd:latest sgaunet/alpine-sshd:latest
-            docker push       sgaunet/alpine-sshd:latest
+            docker buildx build . --platform linux/amd64,linux/arm64 --push -t sgaunet/alpine-sshd:latest
             # get tags of current commit
             tag=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
             if [ ! -z "$tag" ]; then
-              echo "Tag name from git describe: $tag"
-              docker tag  ghcr.io/sgaunet/alpine-sshd:latest sgaunet/alpine-sshd:$tag
-              docker push sgaunet/alpine-sshd:$tag
+              echo "docker buildx build . --platform linux/amd64,linux/arm64 --push -t sgaunet/alpine-sshd:$tag"
+              docker buildx build . --platform linux/amd64,linux/arm64 --push -t sgaunet/alpine-sshd:$tag
             fi
