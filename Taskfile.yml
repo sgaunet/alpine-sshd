@@ -12,14 +12,9 @@ tasks:
   build:
     desc: "Build the docker image"
     cmds:
-      - docker build -t {{.IMAGENAME}}:latest .
-    # silent: true
+      - docker buildx build --push --platform linux/amd64,linux/arm64 -t {{.IMAGENAME}}:latest .
+      - docker pull {{.IMAGENAME}}:latest
 
-  push:
-    desc: "Push the docker image"
-    cmds:
-      - docker push {{.IMAGENAME}}:latest
-    
   tests:
     desc: "Run the tests"
     dir: tests
@@ -27,4 +22,3 @@ tasks:
       - build
     cmds:
       - venom run testsuite-docker.yml --output-dir log --stop-on-failure
-    
