@@ -13,14 +13,18 @@ echo "${AUTHORIZED_KEYS}" > /home/sshuser/.ssh/authorized_keys
 chown -R sshuser:ssh_group /home/sshuser/.ssh 
 chmod 600 /home/sshuser/.ssh/authorized_keys
 
-for folder in $DATA_FOLDERS
-do
-  echo "INFO: Create /data/$folder"
-  mkdir -p /data/$folder
-  chown sshuser:ssh_group /data/$folder
-done
+if [ -n "${DATA_FOLDERS}" ]; then
+  for folder in $DATA_FOLDERS
+  do
+    echo "INFO: Create /data/$folder"
+    mkdir -p "/data/$folder"
+    chown sshuser:ssh_group "/data/$folder"
+  done
+else
+  echo "INFO: No data folders to create."
+fi
 
-if [ ! -z "$SSHUSER_PASSWORD" ]
+if [ -n "$SSHUSER_PASSWORD" ]
 then
   echo -e "$SSHUSER_PASSWORD\n$SSHUSER_PASSWORD" | passwd sshuser
 else
