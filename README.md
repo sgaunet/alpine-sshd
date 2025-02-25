@@ -27,6 +27,7 @@ In the deploy folder, there are:
 
 * a docker folder with a docker-compose file to launch it
 * a k8s folder with the manifests
+* [helm chart available here](https://github.com/sgaunet/helm-alpine-sshd)
 
 # Development
 
