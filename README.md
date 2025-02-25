@@ -1,5 +1,8 @@
 # SSH Server
 
+[![GitHub release](https://img.shields.io/github/release/sgaunet/alpine-sshd.svg)](https://github.com/sgaunet/helm-alpine-sshd/releases/latest)
+![GitHub Downloads](https://img.shields.io/github/downloads/sgaunet/alpine-sshd/total)
+
 This is a simple alpine based SSHD server
 
   * A user is dedicated for SSH connection (named sshuser)
