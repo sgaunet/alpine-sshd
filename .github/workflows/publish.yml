@@ -1,6 +1,10 @@
 name: publish docker image
 on: push
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   publish-docker-image:
     runs-on: ubuntu-latest
