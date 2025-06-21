@@ -1,8 +1,9 @@
 # SSH Server
 
 [![GitHub release](https://img.shields.io/github/release/sgaunet/alpine-sshd.svg)](https://github.com/sgaunet/helm-alpine-sshd/releases/latest)
-![GitHub Downloads](https://img.shields.io/github/downloads/sgaunet/alpine-sshd/total)
 [![CI Status](https://github.com/sgaunet/alpine-sshd/actions/workflows/publish.yml/badge.svg)](https://github.com/sgaunet/alpine-sshd/actions/workflows/publish.yml)
+[![CI Status](https://github.com/sgaunet/alpine-sshd/actions/workflows/release.yml/badge.svg)](https://github.com/sgaunet/alpine-sshd/actions/workflows/release.yml)
+[![License](https://img.shields.io/github/license/sgaunet/alpine-sshd.svg)](LICENSE)
 
 This is a simple alpine based SSHD server
 
