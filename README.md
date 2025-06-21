@@ -2,7 +2,6 @@
 
 [![GitHub release](https://img.shields.io/github/release/sgaunet/alpine-sshd.svg)](https://github.com/sgaunet/helm-alpine-sshd/releases/latest)
 ![GitHub Downloads](https://img.shields.io/github/downloads/sgaunet/alpine-sshd/total)
-[![CI Status](https://github.com/sgaunet/alpine-sshd/actions/workflows/build.yml/badge.svg)](https://github.com/sgaunet/alpine-sshd/actions/workflows/build.yml)
 [![CI Status](https://github.com/sgaunet/alpine-sshd/actions/workflows/publish.yml/badge.svg)](https://github.com/sgaunet/alpine-sshd/actions/workflows/publish.yml)
 
 This is a simple alpine based SSHD server
